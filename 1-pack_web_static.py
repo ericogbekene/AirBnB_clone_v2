@@ -16,5 +16,5 @@ def do_pack():
     str_time = time.strftime(%Y%m%d%h%m%s)
     local( 'sudo mkdir -p /versions')
 
-    local("tar -cvzf versions/web_static_{}.tgz web_static".format(str_time))
+    local("sudo tar -cvzf versions/web_static_{}.tgz web_static".format(str_time))
 
