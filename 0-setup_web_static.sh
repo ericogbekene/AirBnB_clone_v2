@@ -12,10 +12,16 @@ sudo mkdir -p /data/web_static/shared
 
 sudo mkdir -p /data/web_static/releases/test
 sudo mkdir -p /data/web_static/releases/test/index.html
-echo "Hello there old friend" > /data/web_static/releases/test/index.html
+echo "<html>
+  <head>
+  </head>
+  <body>
+    Holberton School
+  </body>
+</html>" > /data/web_static/releases/test/index.html
 
 #create symbolic link
-sudo ln -T /data/web_static/releases/test/ /data/web_static/current
+sudo ln -sTf /data/web_static/releases/test/ /data/web_static/current
 
 chown -R ubuntu:ubuntu /data/
 sudo service nginx restart
@@ -26,7 +32,7 @@ sudo service nginx restart
 
 NGINX_CONFIG_FILE="/etc/nginx/sites-available/default"
 STATIC_CONTENT_PATH="/data/web_static/current/"
-DOMAIN_NAME="mydomainname.tech"
+DOMAIN_NAME="ericogbekene.tech"
 
 if ! grep -q "location /hbnb_static" "$NGINX_CONFIG_FILE"; then
 	sudo sed -i '/server_name '"$DOMAIN_NAME"';/a \        location /hbnb_static {\n            alias '"$STATIC_CONTENT_PATH"';\n        }' "$NGINX_CONFIG_FILE"
