@@ -3,7 +3,7 @@
 Creating flask app
 """
 
-from flask import Flask
+from flask import Flask, render_template
 from markupsafe import escape
 
 app = Flask(__name__)
@@ -35,14 +35,15 @@ def replace_text(text):
     return f"C {text}"
 
 
-@app.route("/python/<text>", defaults= {"text":"is cool"})
-def python_route(text):
+@app.route("/python/<text>", strict_slashes=False)
+@app.route("/python/", strict_slashes=False)
+def python_route(text='is cool'):
     """
     define a route for python path
     """
     if '_' in text:
         text = text.replace("_", " ")
-    return  f"{escape(f'Python {text}')}"
+    return f"{escape(f'Python {text}')}"
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
@@ -52,12 +53,13 @@ def number(n):
     """
     return "{} is a number".format(n)
 
+
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template(n):
     """
     display a page if number is an integer
     """
-    
+    return render_template('5-number.html', num=n)
 
 
 if __name__ == '__main__':
